@@ -2,11 +2,12 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import RequestContext
+from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-from naz.forum.models import Forum, Category, Thread, Post, PostRevision
+from naz.forum.models import Forum, Category, Thread, Post, PostRevision, Profile
 from naz.forum.forms  import PostForm
 
 def index(request):
@@ -45,6 +46,13 @@ def view_thread(request, thread_id, page_offset=0):
     finally:
         thread.views += 1
         thread.save()
+
+def profile(request, profile_id):
+    profile = Profile.objects.select_related().get(pk=1)
+    return render_to_response(
+            "forum/default/profile.html",
+            {"profile": profile}, RequestContext(request))
+
 
 @login_required
 def new_reply(request, threadid):
