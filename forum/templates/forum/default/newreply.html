@@ -1,0 +1,28 @@
+{% extends "forum/base.html" %}
+
+{% block forum %}
+	<div class="catbox">
+		<form action="{% url new_reply thread.id %}" name="new_reply" method="POST">
+			<fieldset name="post_content">
+				<legend>Post Content</legend>
+				<p><label for="id_content">Content</label>{{ form.post_content }}</p>
+			</fieldset>
+			<fieldset name="options">
+				<legend>Options</legend>
+				<p><label for="id_smilies_disabled">Disable Smilies</label>{{ form.smilies_disabled }}</p>
+				<p><label for="id_markup_disabled">Markup Disabled</label>{{ form.markup_disabled }}</p>
+			</fieldset>
+			<p><input type="submit" value="Submit"></p>
+		</form>
+	</div>
+
+	<div class="catbox">
+		<h1>And the rest of the thread ...</h1>
+		{% for p in posts %}
+		<div class="thread plist">
+			<div class="plist user">{{ p.user }}</div>
+			<div class="plist cont">{{ p.revisions.latest.content }}</div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

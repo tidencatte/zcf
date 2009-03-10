@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+
+{% block forum %}
+<table class="catbox"> {# HOORJ REUSE!!1 #}
+	<tr><th colspan="5">{{forum.title}}</th></tr>
+	<tr><th>Title</th><th>Started By</th><th>Replies</th><th>Views</th><th>Last Post</th></tr>
+	{% for t in threads %}
+	<tr><td><a href="{% url view_thread t.id 0 %}">{{ t.title }}</a></td><td>{{ t.user }}</td><td>{{ t.post_set.count }}</td><td>{{ t.views }}<td>{{ t.last_reply.user }}<br>{{ t.last_reply.posted|timesince }} ago</td></tr>
+	{% endfor %}
+</table>
+{% endblock forum %}

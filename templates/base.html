@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ZCF - {% block title %}Main{% endblock title %}</title>
+		<link rel="stylesheet" href="{{ MEDIA_URL }}static/reset.css" type="text/css">
+		<link rel="stylesheet" href="{{ MEDIA_URL }}static/zcf.css" type="text/css">
+	</head>
+	<body>
+		{# <div id="header">{% block header %}{% endblock header %}</div> #}
+		<div id="menu">{% include "menu.html" %}</div>
+		<div id="content">{% block content %}{% endblock content %}</div>
+	{% if debug %}
+	<div style="clear: both;">
+		{{ sql_queries|length }} queries
+		<hr>
+		<table><tr><th>Time</th><th>Query</th></tr>
+	{% for query in sql_queries %}
+	<tr><td>{{ query.time }}</td><td style='font-family: monospace;'>{{ query.sql }}</td></tr>
+	{% endfor %}
+		</table>
+</div>
+	{% endif %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}static/js/jquery.js"></script>
+	</body>
+</html>

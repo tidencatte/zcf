@@ -1,0 +1,27 @@
+{% extends "forum/base.html" %}
+
+{% block forum %}
+	{% for c in categories %}
+		<table class="category">	
+			<tr><th colspan="5">{{ c.title }}</th></tr>
+			<tr>
+				<th>&nbsp;</th>
+				<th>Forum</th>
+				<th>Threads</th>
+				<th>Posts</th>
+				<th>Last Post</th>
+			</tr>
+				{# iterate over the forums in this category #}
+				{% for f in c.forum_set.all %}
+					<tr>
+						<td>0</td>
+						<td><a href="{% url view_forum f.id %}">{{ f.title }}</a><br>{{ f.description }}</td>
+						<td>{{ f.thread_count }}</td>
+						<td>{{ f.post_count }}</td>
+						<td>{% if f.last_post %}{{ f.last_post.user }}{% else %}NEVER!!!!!111111111{% endif %}</td>
+					</tr>
+				{% endfor %}
+			</tr>
+		</table>
+	{% endfor %}
+{% endblock forum %}

@@ -1,0 +1,72 @@
+[
+	{
+		"model": "forum.category",
+		"pk": 1,
+		"fields": {
+			"groups_whitelist": [],
+			"title": "Test Category",
+			"min_power": 0,
+			"max_power": null,
+			"z_index": 0,
+			"is_hidden": false
+		}
+	},
+	{
+		"model": "forum.forum",
+		"pk": 1,
+		"fields": {
+			"category": 1,
+			"title": "Test Forum",
+			"description": "A forum!",
+			"local_moderators": [],
+			"z_index": 0,
+			"post_count": 0,
+			"thread_count": 0,
+			"last_post": null,
+			"min_power": 0,
+			"min_power_reply": 0
+		}
+	},
+	{
+		"model": "forum.thread",
+		"pk": 1,
+		"fields": {
+			"forum": 1,
+			"user": 1,
+			"title": "Test Thread",
+			"replies": 0,
+			"views": 0,
+			"last_reply": 1
+		}
+	},
+	{
+		"model": "forum.postrevision",
+		"pk": 1,
+		"fields": {
+			"post": 1,
+			"content": "This is a test post!",
+			"ip": "127.0.0.1",
+			"rtime": "2009-01-01 00:00:00.000000"
+		}
+	},
+	{
+		"model": "forum.post",
+		"pk": 1,
+		"fields": {
+			"user": 1,
+			"thread": 1
+		}
+	},
+	{
+		"model": "forum.profile",
+		"pk": 1,
+		"fields": {
+			"user": 1,
+			"posts": 0,
+			"threads": 0,
+			"last_ip": "127.0.0.1",
+			"last_url": "/",
+			"sex": 0
+		}
+	}
+]

@@ -1,0 +1,28 @@
+{% extends "forum/base.html" %}{% load cache %}
+
+{% block forum %}
+	{% include "forum/default/inc_thread_toolbox.html" %}
+	<table class="category">
+		<tr><th>User</th><th colspan="3">Post</th></tr>
+		{% for post in posts %}
+			{% with post.user as u %}
+		<tr>
+			<td class='ucell'>
+				{% cache 3600 userbox u.id %}
+				{{u.name}}<br>
+				Posts: {{ u.get_profile.posts }}<br>
+				Joined: {{ u.date_joined|date:"M d, Y" }}
+				{% endcache %}
+			</td>
+			<td class='upost'>
+				<div class="toolbox">Posted on: {{ post.posted|date:"M d, Y" }} {{ post.posted|time:"H:i:s" }}</div>
+				{% cache 7200 userpost post.id %}
+				{{ post.revisions.latest.content }}
+				{% endcache%}
+			</td>
+		</tr>
+		 {% endwith %}
+		{% endfor %}
+	</table>
+	{% include "forum/default/inc_thread_toolbox.html" %}
+{% endblock forum %}
