@@ -1,0 +1,12 @@
+naz - Another ZCF Iteration
+---------------------------
+
+Fast notes:
+- This is still incomplete. It'll eventually be more feature rich in the future.
+  There's still a lot of things being doen through the django admin application
+
+
+Requirements
+------------
+- A working django install (2.4.x and greater preferred, due to use of decorator syntax)
+- A huge degree of patience
