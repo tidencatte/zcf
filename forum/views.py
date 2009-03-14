@@ -11,16 +11,14 @@ from naz.forum.models import Forum, Category, Thread, Post, PostRevision, Profil
 from naz.forum.forms  import PostForm
 
 def index(request):
-    temp    = get_template("forum/default/index.html")
-    context = RequestContext(request, {"categories": Category.objects.select_related().order_by("-z_index")})
-    return HttpResponse(temp.render(context))
+    return render_to_response("forum/default/index.html",
+            {"categories": Category.objects.select_related().order_by("-z_index")},RequestContext(request))
 
 def view_forum(request, forum_id):
     threads  = Thread.objects.filter(forum__id__exact=forum_id).select_related()[0:20]
     forum    = Forum.objects.select_related().get(pk=forum_id)
-    template = get_template("forum/default/forum_list.html")
-    context  = RequestContext(request, {"forum": forum, "threads": threads})
-    return HttpResponse(template.render(context))
+    return render_to_response("forum/default/forum_list.html",
+            {"forum": forum, "threads": threads}, RequestContext(request))
 
 def view_thread(request, thread_id, page_offset=0):
     posts    = Post.objects\
@@ -32,7 +30,6 @@ def view_thread(request, thread_id, page_offset=0):
             .get(pk=thread_id)
 
     forum    = Forum.objects\
-            .select_related()\
             .get(pk=thread.forum_id)
     context  = RequestContext(
             request,
@@ -63,7 +60,7 @@ def new_reply(request, threadid):
             .order_by("-posted")[:15]\
             .select_related()
     context  = RequestContext(request,
-            {"thread": thread, "form": form, "posts": posts})
+            {"thread": thread, "form": form, "posts": posts, "errors": None})
     template = get_template("forum/default/newreply.html")
     prof = request.user.get_profile()
     if form.is_valid() and request.method == "POST":
@@ -87,5 +84,4 @@ def new_reply(request, threadid):
                     "view_thread",
                     args=[thread.id, int(round(thread.replies/20))]))
 
-    print prof
     return HttpResponse(template.render(context))
